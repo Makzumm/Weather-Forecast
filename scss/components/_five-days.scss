@@ -1,0 +1,46 @@
+.weather-icon1 {
+    background: transparent;
+}
+
+.weather-five-days-list {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+}
+
+.weather-five-days-list__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.min {
+    font-size: 24px;
+    color: #ffffff;
+}
+
+.max {
+    font-size: 24px;
+    color: rgba(224, 224, 224, 0.95);
+}
+
+.windSpeed {
+    font-size: 22px;
+    color: rgba(224, 224, 224, 0.90);
+}
+
+.city-name {
+    margin-bottom: 54px;
+    font-size: 32px;
+    text-align: center;
+}
+
+.day-date {
+    font-size: 18px;
+}
+
+.all-wrapper--five-days {
+    height: 700px;
+}
