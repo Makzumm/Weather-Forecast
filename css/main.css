@@ -521,6 +521,12 @@ body {
   color: white;
 }
 
+.error-field {
+  text-align: center;
+  font-size: 24px;
+  color: white;
+}
+
 .weather-icon1 {
   background: transparent;
 }
