@@ -19,7 +19,7 @@ buttonEl.addEventListener('click', fetchTown);
 inputEl.addEventListener('keyup', function (e) {
 
     if (inputEl.value === '') {
-        return console.log(false)
+        return null
     } else {
         townValue = inputEl.value
 
@@ -49,7 +49,7 @@ function errorFilter(error) {
         }
     }
 
-    errorField.innerHTML = 'Something went wrong, try again';
+    errorField.innerHTML = 'Something went wrong, please, try again.';
     errorInputField.innerHTML = '';
 }
 
@@ -58,7 +58,7 @@ function townMarkUp(data) {
     temp.innerHTML = `<p class="weather-block__txt">Temperature : <span class="weather-block__txt--marked">${Math.round(data['main']['temp'])}&#176;C</span></p>`;
     feelsLike.innerHTML = `<p class="weather-block__txt">Feels like : <span class="weather-block__txt--marked">${Math.round(data['main']['feels_like'])}&#176;C</span></p>`;
     windSpeed.innerHTML = `<p class="weather-block__txt">Wind speed : <span class="weather-block__txt--marked">${data['wind']['speed']}km/h</span></p>`;
-    description.innerHTML = `<p class="weather-block__txt">Weather : <span class="weather-block__txt--marked">${data['weather'][0]['description'].charAt(0).toUpperCase() + data['weather'][0]['description'].slice(1)}</span></p><img src='http://openweathermap.org/img/w/${data["weather"][0]["icon"]}.png' width='65' height='65'>`;
+    description.innerHTML = `<p class="weather-block__txt">Weather : <span class="weather-block__txt--marked">${data['weather'][0]['description'].charAt(0).toUpperCase() + data['weather'][0]['description'].slice(1)}</span></p><img class='icon-weather' src='http://openweathermap.org/img/w/${data["weather"][0]["icon"]}.png' width='65' height='65'>`;
     console.log(data)
 }
 
