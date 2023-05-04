@@ -230,7 +230,7 @@ body {
 }
 @media screen and (min-width: 800px) and (max-width: 1399px) {
   .search-input {
-    padding: 0px 0px 0px 0px;
+    padding: 0px 16px 0px 16px;
     border: none;
     border-radius: 5px;
     outline: none;
@@ -264,67 +264,52 @@ body {
 @media screen and (max-width: 399px) {
   .search-input::-webkit-input-placeholder {
     font-size: 8px;
-    text-align: center;
   }
   .search-input::-moz-placeholder {
     font-size: 8px;
-    text-align: center;
   }
   .search-input:-ms-input-placeholder {
     font-size: 8px;
-    text-align: center;
   }
   .search-input::-ms-input-placeholder {
     font-size: 8px;
-    text-align: center;
   }
   .search-input::placeholder {
     font-size: 8px;
-    text-align: center;
   }
 }
 @media screen and (min-width: 400px) and (max-width: 799px) {
   .search-input::-webkit-input-placeholder {
     font-size: 16px;
-    text-align: center;
   }
   .search-input::-moz-placeholder {
     font-size: 16px;
-    text-align: center;
   }
   .search-input:-ms-input-placeholder {
     font-size: 16px;
-    text-align: center;
   }
   .search-input::-ms-input-placeholder {
     font-size: 16px;
-    text-align: center;
   }
   .search-input::placeholder {
     font-size: 16px;
-    text-align: center;
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1399px) {
   .search-input::-webkit-input-placeholder {
     font-size: 16px;
-    text-align: center;
   }
   .search-input::-moz-placeholder {
     font-size: 16px;
-    text-align: center;
   }
   .search-input:-ms-input-placeholder {
     font-size: 16px;
-    text-align: center;
   }
   .search-input::-ms-input-placeholder {
     font-size: 16px;
-    text-align: center;
   }
   .search-input::placeholder {
     font-size: 16px;
-    text-align: center;
   }
 }
 .all-wrapper {

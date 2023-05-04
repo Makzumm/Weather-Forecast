@@ -11,17 +11,22 @@ let errorInputField = document.querySelector('.error-input-field');
 
 //////////////////////////////////////////////////////////////////
 
+let townValue = undefined;
+
 buttonEl.addEventListener('click', fetchTown);
 
 document.getElementById('search-input').addEventListener('keyup', function (e) {
+    townValue = inputEl.value
+
     if (e.code === 'Enter') {
+
         buttonEl.click();
+
         setTimeout(() => {
 
             if (cityName.value !== '') {
                 inputEl.value = '';
             }
-
         }, 200)
         errorField.innerHTML = '';
         errorInputField.innerHTML = '';
@@ -29,13 +34,17 @@ document.getElementById('search-input').addEventListener('keyup', function (e) {
 })
 
 function fetchTown() {
+
     if (inputEl.value === '') {
+
         errorInputField.innerHTML = 'Please, type the city name!';
+
     } else {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${inputEl.value}&appid=5161531edb6939420a9faddefc0dd57d&units=metric`)
+
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${townValue}&appid=5161531edb6939420a9faddefc0dd57d&units=metric`)
             .then(response => response.json())
             .then(data => {
-                cityName.innerHTML = `<p class="weather-block__txt">City : <span class="weather-block__txt--marked">${inputEl.value.charAt(0).toUpperCase() + inputEl.value.slice(1).toLowerCase()}</span></p>`;
+                cityName.innerHTML = `<p class="weather-block__txt">City : <span class="weather-block__txt--marked">${townValue.charAt(0).toUpperCase() + townValue.slice(1).toLowerCase()}</span></p>`;
                 temp.innerHTML = `<p class="weather-block__txt">Temperature : <span class="weather-block__txt--marked">${Math.round(data['main']['temp'])}&#176;C</span></p>`;
                 feelsLike.innerHTML = `<p class="weather-block__txt">Feels like : <span class="weather-block__txt--marked">${Math.round(data['main']['feels_like'])}&#176;C</span></p>`;
                 windSpeed.innerHTML = `<p class="weather-block__txt">Wind speed : <span class="weather-block__txt--marked">${data['wind']['speed']}km/h</span></p>`;
@@ -46,5 +55,6 @@ function fetchTown() {
                 errorField.innerHTML = error;
                 errorInputField.innerHTML = '';
             });
+
     }
 }
