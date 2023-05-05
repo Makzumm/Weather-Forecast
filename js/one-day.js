@@ -64,6 +64,13 @@ function townMarkUp(data) {
 
 function fetchTown() {
 
+    setTimeout(() => {
+
+        if (cityName.value !== '') {
+            inputEl.value = '';
+        }
+    }, 200)
+
     if (inputEl.value === '') {
 
         errorInputField.innerHTML = 'Please, type the city name!';
@@ -81,3 +88,5 @@ function fetchTown() {
 
     }
 }
+
+

@@ -22,7 +22,7 @@ document.getElementById('search-input').addEventListener('keyup', function (e) {
 
 function fetchTown() {
 
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${inputEl.value}&appid=5161531edb6939420a9faddefc0dd57d&units=metric`)
+    fetch(`api.openweathermap.org/data/2.5/forecast/daily?lat=44.34&lon=10.99&cnt=7&appid=5161531edb6939420a9faddefc0dd57d&units=metric`)
         .then(response => response.json())
         .then(data => {
             for (let i = 0; i < 5; i += 1) {
