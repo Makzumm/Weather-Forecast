@@ -514,21 +514,6 @@ body {
     gap: 12px;
   }
 }
-.weather-block__txt {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: baseline;
-      -ms-flex-align: baseline;
-          align-items: baseline;
-  -webkit-box-pack: baseline;
-      -ms-flex-pack: baseline;
-          justify-content: baseline;
-  text-align: center;
-  margin-bottom: 0;
-  font-size: 28px;
-}
-
 @media screen and (min-width: 400px) and (max-width: 799px) {
   .weather-block__txt {
     display: -webkit-box;
@@ -561,6 +546,21 @@ body {
     font-size: 22px;
   }
 }
+.weather-block__txt {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  -webkit-box-pack: baseline;
+      -ms-flex-pack: baseline;
+          justify-content: baseline;
+  text-align: center;
+  margin-bottom: 0;
+  font-size: 24px;
+}
+
 .weather-block__txt--marked {
   display: -webkit-box;
   display: -ms-flexbox;
