@@ -9,9 +9,28 @@ let weatherWrapper = document.querySelector('.weather-block');
 let weatherWrapperEls = document.querySelectorAll('.child-block')
 let errorField = document.querySelector('.error-field');
 let errorInputField = document.querySelector('.error-input-field');
+let formSubm = document.querySelector('.form-subm')
+
+const API_KEY = "5161531edb6939420a9faddefc0dd57d";
+const FETCH_LINK = "https://api.openweathermap.org/data/2.5/weather?";
 
 //////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////
+let reverseGeocoder = new BDCReverseGeocode();
+
+let geoLocatCityName = undefined
+
+reverseGeocoder.getClientLocation(function (result) {
+    geoLocatCityName = result.city;
+    // console.log(geoLocatCityName)
+});
+
+reverseGeocoder.localityLanguage = 'es';
+
+/////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////
 let townValue = undefined;
 
 buttonEl.addEventListener('click', fetchTown);
@@ -64,6 +83,8 @@ function townMarkUp(data) {
 
 function fetchTown() {
 
+    errorField.innerHTML = ""
+
     setTimeout(() => {
 
         if (cityName.value !== '') {
@@ -77,7 +98,7 @@ function fetchTown() {
 
     } else {
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${townValue}&appid=5161531edb6939420a9faddefc0dd57d&units=metric`)
+        fetch(`${FETCH_LINK}q=${townValue}&appid=${API_KEY}&units=metric`)
             .then(response => response.json())
             .then(data => {
                 townMarkUp(data);
@@ -90,39 +111,48 @@ function fetchTown() {
 }
 
 
-(() => {
-    const message = document.querySelector('#message');
+///////////////////////////////////////////////////////////////////////////////////
 
-    // check if the Geolocation API is supported
-    if (!navigator.geolocation) {
-        message.textContent = `Your browser doesn't support Geolocation`;
-        message.classList.add('error');
-        return;
-    }
+// const message = document.querySelector('#message');
 
-    // handle click event
-    const btn = document.querySelector('#show');
-    btn.addEventListener('click', function () {
-        // get the current position
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+// let messageEl = undefined;
+
+// function success() {
+//     return true;
+// }
+
+// function failure() {
+//     return false;
+// }
+
+// check if the Geolocation API is supported
+if (!navigator.geolocation) {
+
+    console.log("Error")
+
+} else {
+    setTimeout(() => {
+
+        inputEl.value = geoLocatCityName
+
+    }, 1100)
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Wait for the DOM to be fully loaded before executing this
+
+        // Set the focus on the input field
+        inputEl.focus();
+
+        // Create a new KeyboardEvent with the desired key code and options
+        const keyboardEvent = new KeyboardEvent("keyup", {
+            key: "Enter", // Replace "Enter" with the desired key code
+            bubbles: true,
+            cancelable: true
+        });
+
+        // Dispatch the keyboard event on the input field
+        inputEl.dispatchEvent(keyboardEvent);
     });
+}
 
-
-    // handle success case
-    function onSuccess(position) {
-        const {
-            latitude,
-            longitude
-        } = position.coords;
-
-        message.classList.add('success');
-        message.textContent = `Your location: (${latitude},${longitude})`;
-    }
-
-    // handle error case
-    function onError() {
-        message.classList.add('error');
-        message.textContent = `Failed to get your location!`;
-    }
-})();
 
