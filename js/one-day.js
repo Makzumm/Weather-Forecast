@@ -17,20 +17,41 @@ const FETCH_LINK = "https://api.openweathermap.org/data/2.5/weather?";
 //////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////
+
+const locationBtn = document.querySelector('.location-button');
+
 let reverseGeocoder = new BDCReverseGeocode();
 
 let geoLocatCityName = undefined
 
-reverseGeocoder.getClientLocation(function (result) {
-    geoLocatCityName = result.city;
-    // console.log(geoLocatCityName)
-});
-
 reverseGeocoder.localityLanguage = 'es';
+
+function getLocation(result) {
+
+    geoLocatCityName = result.city;
+
+    inputEl.value = geoLocatCityName;
+}
+
+locationBtn.addEventListener('click', () => {
+
+    if (navigator.permissions) {
+        navigator.permissions.query({ name: 'geolocation' }).then(function (permissionStatus) {
+            if (permissionStatus.state === 'denied') {
+                reverseGeocoder.getClientCoordinates = false
+                console.log('denied')
+            } else {
+                reverseGeocoder.getClientLocation(getLocation)
+            }
+        });
+    }
+
+})
 
 /////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
+
 let townValue = undefined;
 
 buttonEl.addEventListener('click', fetchTown);
@@ -73,6 +94,7 @@ function errorFilter(error) {
 }
 
 function townMarkUp(data) {
+
     cityName.innerHTML = `<p class="weather-block__txt">City : <span class="weather-block__txt--marked">${townValue.charAt(0).toUpperCase() + townValue.slice(1).toLowerCase()}</span></p>`;
     temp.innerHTML = `<p class="weather-block__txt">Temperature : <span class="weather-block__txt--marked">${Math.round(data['main']['temp'])}&#176;C</span></p>`;
     feelsLike.innerHTML = `<p class="weather-block__txt">Feels like : <span class="weather-block__txt--marked">${Math.round(data['main']['feels_like'])}&#176;C</span></p>`;
@@ -84,6 +106,8 @@ function townMarkUp(data) {
 function fetchTown() {
 
     errorField.innerHTML = ""
+
+    errorInputField.innerHTML = ""
 
     setTimeout(() => {
 
@@ -110,49 +134,6 @@ function fetchTown() {
     }
 }
 
-
-///////////////////////////////////////////////////////////////////////////////////
-
-// const message = document.querySelector('#message');
-
-// let messageEl = undefined;
-
-// function success() {
-//     return true;
-// }
-
-// function failure() {
-//     return false;
-// }
-
-// check if the Geolocation API is supported
-if (!navigator.geolocation) {
-
-    console.log("Error")
-
-} else {
-    setTimeout(() => {
-
-        inputEl.value = geoLocatCityName
-
-    }, 1100)
-
-    document.addEventListener("DOMContentLoaded", function () {
-        // Wait for the DOM to be fully loaded before executing this
-
-        // Set the focus on the input field
-        inputEl.focus();
-
-        // Create a new KeyboardEvent with the desired key code and options
-        const keyboardEvent = new KeyboardEvent("keyup", {
-            key: "Enter", // Replace "Enter" with the desired key code
-            bubbles: true,
-            cancelable: true
-        });
-
-        // Dispatch the keyboard event on the input field
-        inputEl.dispatchEvent(keyboardEvent);
-    });
-}
+/////////////////////////////////////////////////////////////////
 
 
