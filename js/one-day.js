@@ -145,6 +145,10 @@ inputEl.addEventListener('keyup', function (e) {
 
 function fetchTown() {
 
+    for (const el of weatherWrapperEls) {
+        el.innerHTML = ''
+    }
+
     errorFieldsCleaner();
     inputCleaner();
 
@@ -164,6 +168,7 @@ function fetchTown() {
             })
             .catch(error => {
                 errorFilter(error);
+                loadingGif.classList.add('loading_gif--hidden');
             });
 
     }
