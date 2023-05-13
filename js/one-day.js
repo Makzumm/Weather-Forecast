@@ -42,6 +42,8 @@ function showPosition(position) {
         .then(response => response.json())
         .then(data => {
 
+            console.log(data)
+
             geoLocatCityName = data['address']['city']
 
             townValue = String(geoLocatCityName);
