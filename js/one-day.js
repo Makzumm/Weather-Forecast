@@ -1,3 +1,5 @@
+////////////////////////////////////////////////////////////////////
+
 let buttonEl = document.querySelector('.search-button');
 let inputEl = document.querySelector('.search-input');
 let cityName = document.querySelector('.name');
@@ -13,8 +15,6 @@ let locationBtn = document.querySelector('.location-button');
 let loadingGif = document.querySelector('.loading_gif');
 
 let townValue = undefined;
-
-let reverseGeocoder = new BDCReverseGeocode();
 let geoLocatCityName = undefined;
 
 
@@ -24,20 +24,23 @@ const FETCH_LINK = "https://api.openweathermap.org/data/2.5/weather?";
 //////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////
+// GEOLOCATION 
+////////////////////////////////////////////////////////////////
 
 function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
+    if (!navigator.geolocation) {
         console.log("Geolocation is not supported by this browser.");
+
+    } else {
+        navigator.geolocation.getCurrentPosition(showPosition);
     }
 }
 
 function showPosition(position) {
+
     fetch(`https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
         .then(response => response.json())
         .then(data => {
-            // console.log(data)
 
             geoLocatCityName = data['address']['city']
 
@@ -52,8 +55,8 @@ function showPosition(position) {
 }
 
 function navigatorPermissionCheck() {
-
     navigator.permissions.query({ name: 'geolocation' }).then(function (permissionStatus) {
+
         if (permissionStatus.state === "denied") {
 
             console.log('denied');
@@ -71,6 +74,8 @@ locationBtn.addEventListener('click', () => {
         console.log("navigator is not supported");
 
     } else {
+
+        inputEl.focus()
         navigatorPermissionCheck();
     }
 
@@ -78,6 +83,8 @@ locationBtn.addEventListener('click', () => {
 
 /////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////
+// WEATHER FETCH AND SOME ERROR/FUNC HANDLERS
 ////////////////////////////////////////////////////////////////
 
 function errorFieldsCleaner() {
@@ -107,7 +114,6 @@ function townMarkUp(data) {
 }
 
 function inputCleaner() {
-
     setTimeout(() => {
 
         if (cityName.value !== '') {
@@ -120,17 +126,13 @@ function inputCleaner() {
 buttonEl.addEventListener('click', fetchTown);
 
 inputEl.addEventListener('keyup', function (e) {
-
     if (inputEl.value === '') {
-
         return null;
 
     } else {
-
         townValue = inputEl.value
 
         if (e.code === 'Enter') {
-
             buttonEl.click();
 
             setTimeout(() => {
@@ -148,24 +150,24 @@ inputEl.addEventListener('keyup', function (e) {
 })
 
 function fetchTown() {
-
     for (const el of weatherWrapperEls) {
         el.innerHTML = ''
     }
 
     errorFieldsCleaner();
     inputCleaner();
+    console.clear()
 
     if (inputEl.value === '') {
         errorInputField.innerHTML = 'Please, type the city name!';
 
     } else {
-
         loadingGif.classList.remove('loading_gif--hidden');
 
         fetch(`${FETCH_LINK}q=${townValue}&appid=${API_KEY}&units=metric`)
             .then(response => response.json())
             .then(data => {
+
                 townMarkUp(data);
 
                 loadingGif.classList.add('loading_gif--hidden');
@@ -174,7 +176,6 @@ function fetchTown() {
                 errorFilter(error);
                 loadingGif.classList.add('loading_gif--hidden');
             });
-
     }
 }
 
