@@ -25,48 +25,52 @@ const FETCH_LINK = "https://api.openweathermap.org/data/2.5/weather?";
 
 /////////////////////////////////////////////////////////////////
 
-function onSuccess() {
-    console.log(true);
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        console.log("Geolocation is not supported by this browser.");
+    }
 }
 
-function onError() {
-    console.log(false);
-}
+function showPosition(position) {
+    fetch(`https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
+        .then(response => response.json())
+        .then(data => {
+            // console.log(data)
 
-function getLocation(result) {
+            geoLocatCityName = data['address']['city']
 
-    geoLocatCityName = result.city;
+            townValue = String(geoLocatCityName);
 
-    townValue = geoLocatCityName;
+            inputEl.value = townValue
 
-    inputEl.value = townValue;
+        })
+        .catch(error => {
+            errorFilter(error);
+        });;
 }
 
 function navigatorPermissionCheck() {
 
-    if (navigator.permissions) {
+    navigator.permissions.query({ name: 'geolocation' }).then(function (permissionStatus) {
+        if (permissionStatus.state === "denied") {
 
-        navigator.permissions.query({ name: 'geolocation' }).then(function (permissionStatus) {
-            if (permissionStatus.state === "denied") {
+            console.log('denied');
 
-                console.log('denied');
+        } else {
 
-            } else {
-                inputEl.focus();
-                reverseGeocoder.getClientLocation(getLocation);
-            }
-        });
-    }
-
+            getLocation()
+        }
+    });
 }
 
 locationBtn.addEventListener('click', () => {
-    if (!navigator.geolocation) {
+    if (!"geolocation" in navigator) {
 
         console.log("navigator is not supported");
 
     } else {
-        // navigator.geolocation.getCurrentPosition(onSuccess, onError);
         navigatorPermissionCheck();
     }
 
