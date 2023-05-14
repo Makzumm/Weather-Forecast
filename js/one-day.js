@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////
-
+let allElsWrapper = document.querySelector('.all-wrapper')
 let buttonEl = document.querySelector('.search-button');
 let inputEl = document.querySelector('.search-input');
 let cityName = document.querySelector('.name');
@@ -17,6 +17,8 @@ let loadingGif = document.querySelector('.loading_gif');
 let townValue = undefined;
 let geoLocatCityName = undefined;
 
+let mediaSize = window.matchMedia("(max-width: 399px)");
+let mediaSizeOption = window.matchMedia("(min-width: 400px)");
 
 const API_KEY = "5161531edb6939420a9faddefc0dd57d";
 const FETCH_LINK = "https://api.openweathermap.org/data/2.5/weather?";
@@ -27,13 +29,31 @@ const FETCH_LINK = "https://api.openweathermap.org/data/2.5/weather?";
 // GEOLOCATION 
 ////////////////////////////////////////////////////////////////
 
-function getLocation() {
-    if (!navigator.geolocation) {
-        console.log("Geolocation is not supported by this browser.");
+locationBtn.addEventListener('click', () => {
+    if (!"geolocation" in navigator) {
 
-    } else {
-        navigator.geolocation.getCurrentPosition(showPosition);
+        console.log("navigator is not supported");
+
+    } else {                                        ///// CHECK IF THE GEOLOCATION IS SUPPORTED
+
+        inputEl.focus()
+        navigatorPermissionCheck();
     }
+
+})
+
+function navigatorPermissionCheck() {
+    navigator.permissions.query({ name: 'geolocation' }).then(function (permissionStatus) {
+
+        if (permissionStatus.state === "denied") { //////////// CHECKING IF USER DENIED OR ACCEPTED THE GEOLOCATION
+
+            console.log('denied');
+
+        } else {
+
+            navigator.geolocation.getCurrentPosition(showPosition)
+        }
+    });
 }
 
 function showPosition(position) {
@@ -41,10 +61,7 @@ function showPosition(position) {
     fetch(`https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
         .then(response => response.json())
         .then(data => {
-
-            console.log(data)
-
-            geoLocatCityName = data['address']['city']
+            geoLocatCityName = data['address']['city'] //// GETTING CONVERTED COORDINATES
 
             townValue = String(geoLocatCityName);
 
@@ -56,33 +73,6 @@ function showPosition(position) {
         });;
 }
 
-function navigatorPermissionCheck() {
-    navigator.permissions.query({ name: 'geolocation' }).then(function (permissionStatus) {
-
-        if (permissionStatus.state === "denied") {
-
-            console.log('denied');
-
-        } else {
-
-            getLocation()
-        }
-    });
-}
-
-locationBtn.addEventListener('click', () => {
-    if (!"geolocation" in navigator) {
-
-        console.log("navigator is not supported");
-
-    } else {
-
-        inputEl.focus()
-        navigatorPermissionCheck();
-    }
-
-})
-
 /////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
@@ -91,14 +81,14 @@ locationBtn.addEventListener('click', () => {
 
 function errorFieldsCleaner() {
     errorField.innerHTML = '';
-    errorInputField.innerHTML = '';
+    errorInputField.innerHTML = ''; /// ERROR FIELDS CLEANING FUNCTION
 }
 
 function errorFilter(error) {
     let errorEl = error.name;
 
     if (errorEl) {
-        for (const el of weatherWrapperEls) {
+        for (const el of weatherWrapperEls) { // CLEANING VALUES OF THE LI ELEMENTS TO HIHGLIGHT THE ERROR
             el.innerHTML = '';
         }
     }
@@ -107,7 +97,7 @@ function errorFilter(error) {
     errorInputField.innerHTML = '';
 }
 
-function townMarkUp(data) {
+function townMarkUp(data) { // THE WEATHER MARKUP (KINDA BIG, YEAH?)
     cityName.innerHTML = `<p class="weather-block__txt">City : <span class="weather-block__txt--marked">${townValue.charAt(0).toUpperCase() + townValue.slice(1).toLowerCase()}</span></p>`;
     temp.innerHTML = `<p class="weather-block__txt">Temperature : <span class="weather-block__txt--marked">${Math.round(data['main']['temp'])}&#176;C</span></p>`;
     feelsLike.innerHTML = `<p class="weather-block__txt">Feels like : <span class="weather-block__txt--marked">${Math.round(data['main']['feels_like'])}&#176;C</span></p>`;
@@ -118,14 +108,14 @@ function townMarkUp(data) {
 function inputCleaner() {
     setTimeout(() => {
 
-        if (cityName.value !== '') {
+        if (cityName.value !== '') {    // INPUT CLEANING AFTER USER'S CLICK ON BUTTON BROWSE OR PRESSING THE ENTER ON INPUT 
             inputEl.value = '';
         }
     }, 200)
 
 }
 
-buttonEl.addEventListener('click', fetchTown);
+buttonEl.addEventListener('click', fetchTown); // BUTTON "BROWSE" THAT MAKING THE MAGIC OF FETCH
 
 inputEl.addEventListener('keyup', function (e) {
     if (inputEl.value === '') {
@@ -137,28 +127,21 @@ inputEl.addEventListener('keyup', function (e) {
         if (e.code === 'Enter') {
             buttonEl.click();
 
-            setTimeout(() => {
-
-                if (cityName.value !== '') {
-                    inputEl.value = '';
-                }
-            }, 200)
+            // CHECKING THE INPUT IF IT'S EMPTY AND SOMETHING ELSE XD
 
             inputEl.blur()
-
-            errorFieldsCleaner();
         }
     }
 })
 
 function fetchTown() {
     for (const el of weatherWrapperEls) {
-        el.innerHTML = ''
+        el.innerHTML = '';
     }
 
     errorFieldsCleaner();
     inputCleaner();
-    console.clear()
+    console.clear();
 
     if (inputEl.value === '') {
         errorInputField.innerHTML = 'Please, type the city name!';
@@ -166,18 +149,34 @@ function fetchTown() {
     } else {
         loadingGif.classList.remove('loading_gif--hidden');
 
-        fetch(`${FETCH_LINK}q=${townValue}&appid=${API_KEY}&units=metric`)
+        fetch(`${FETCH_LINK}q=${townValue}&appid=${API_KEY}&units=metric`) // THE WEATHER DATA FETCHING AND SHOWING THE LOADING GIF AND CLEANING ALL THE UNNECESSARY STUFF
             .then(response => response.json())
             .then(data => {
-
                 townMarkUp(data);
+
+                mediaQueriesFunc(mediaSize);    //IDK, MAYBE I'LL MAKE THIS FUNC MORE EASIER CUZ IT'S ACCPETING A LOT OF SH*T, ANYWAY, IT WORKS)))
 
                 loadingGif.classList.add('loading_gif--hidden');
             })
             .catch(error => {
                 errorFilter(error);
+
                 loadingGif.classList.add('loading_gif--hidden');
             });
+    }
+}
+
+/////////////////////////////////////////////////////////////////
+
+// MEDIA QUERIES
+
+function mediaQueriesFunc(mediaSize) {
+    if (mediaSize.matches) { // If media query matches
+
+        allElsWrapper.style.height = "600px";
+        //CHECKING THE SIZE OF BROWESER IN SMALL MOBILES TO SHOW THE DATA ON PROPER WAY
+    } else {
+        allElsWrapper.style.height = null
     }
 }
 
