@@ -1,0 +1,253 @@
+.form-wrapper {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 48px;
+    margin-bottom: 48px;
+}
+
+@media screen and (max-width: 399px) {
+    .form-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 0 50px;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 26px;
+        margin-bottom: 48px;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 799px) {
+    .form-wrapper {
+        display: flex;
+        gap: 4px;
+        justify-content: center;
+        padding: 0 10px 0 10px;
+        margin-top: 48px;
+        margin-bottom: 24px;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1399px) {
+    .form-wrapper {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 48px;
+        margin-bottom: 28px;
+    }
+}
+
+.search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 58px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--black-main-color);
+    background: var(--main-white-color);
+    box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+    cursor: pointer;
+}
+
+.location-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 58px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--black-main-color);
+    background: var(--main-white-color);
+    box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+    cursor: pointer;
+}
+
+@media screen and (max-width: 399px) {
+    .search-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 24px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-transform: capitalize;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--black-main-color);
+        background: var(--main-white-color);
+        box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+        cursor: pointer;
+    }
+
+    .location-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 22px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-transform: capitalize;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--black-main-color);
+        background: var(--main-white-color);
+        box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+        cursor: pointer;
+    }
+
+}
+
+@media screen and (min-width: 400px) and (max-width: 799px) {
+    .search-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 22px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-transform: capitalize;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--black-main-color);
+        background: var(--main-white-color);
+        box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+        cursor: pointer;
+    }
+
+    .location-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 22px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-transform: capitalize;
+        font-size: 12px;
+        font-weight: 700;
+        color: #000;
+        background: var(--main-white-color);
+        box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+        cursor: pointer;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1399px) {
+    .search-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 42px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-transform: capitalize;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--black-main-color);
+        background: var(--main-white-color);
+        box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+        cursor: pointer;
+    }
+
+    .location-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 22px;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-transform: capitalize;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--black-main-color);
+        background: var(--main-white-color);
+        box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+        cursor: pointer;
+    }
+}
+
+.search-input {
+    padding: 14px 14px 14px 18px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+}
+
+@media screen and (max-width: 399px) {
+    .search-input {
+        padding: 8px 4px 8px 4px;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 799px) {
+    .search-input {
+        padding: 4px 4px 4px 4px;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1399px) {
+    .search-input {
+        padding: 0px 16px 0px 16px;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18px;
+    }
+}
+
+.search-input::placeholder {
+    font-size: 22px;
+    text-align: center;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 399px) {
+    .search-input::placeholder {
+        visibility: hidden;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 799px) {
+    .search-input::placeholder {
+        visibility: hidden;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1399px) {
+    .search-input::placeholder {
+        font-size: 16px;
+    }
+}

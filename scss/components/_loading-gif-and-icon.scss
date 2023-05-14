@@ -1,0 +1,29 @@
+.loading_gif {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.loading_gif--hidden {
+    display: none;
+}
+
+@media screen and (max-width: 399px) {
+    .icon-weather {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 799px) {
+    .icon-weather {
+        width: 55px;
+        height: 55px;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1399px) {
+    .icon-weather {
+        width: 45px;
+        height: 45px;
+    }
+}

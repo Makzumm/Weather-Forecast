@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////
-let allElsWrapper = document.querySelector('.all-wrapper')
+let allElsWrapper = document.querySelector('.data-wrapper')
 let buttonEl = document.querySelector('.search-button');
 let inputEl = document.querySelector('.search-input');
 let cityName = document.querySelector('.name');
@@ -18,7 +18,6 @@ let townValue = undefined;
 let geoLocatCityName = undefined;
 
 let mediaSize = window.matchMedia("(max-width: 399px)");
-let mediaSizeOption = window.matchMedia("(min-width: 400px)");
 
 const API_KEY = "5161531edb6939420a9faddefc0dd57d";
 const FETCH_LINK = "https://api.openweathermap.org/data/2.5/weather?";
@@ -152,6 +151,9 @@ function fetchTown() {
         fetch(`${FETCH_LINK}q=${townValue}&appid=${API_KEY}&units=metric`) // THE WEATHER DATA FETCHING AND SHOWING THE LOADING GIF AND CLEANING ALL THE UNNECESSARY STUFF
             .then(response => response.json())
             .then(data => {
+
+                const { main, temp, feels_like, weather, icon, wind, speed, description } = data
+
                 townMarkUp(data);
 
                 mediaQueriesFunc(mediaSize);    //IDK, MAYBE I'LL MAKE THIS FUNC MORE EASIER CUZ IT'S ACCPETING A LOT OF SH*T, ANYWAY, IT WORKS)))

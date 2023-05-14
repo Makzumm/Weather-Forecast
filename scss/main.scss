@@ -1,3 +1,8 @@
 @import "utils/reset";
 @import "utils/indents";
-@import "components/app";
+@import "utils/vars";
+@import "components/main-wrappers";
+@import "components/search-form";
+@import "components/weather-data";
+@import "components/error-fields";
+@import "components/loading-gif-and-icon";

@@ -14,9 +14,9 @@
 
 <body>
     <div class="container">
-        <div class="all-wrapper">
-            <h1 class="all-wrapper__title">Weather App</h1>
-            <div class="input-button-wrapper">
+        <div class="data-wrapper">
+            <h1 class="data-wrapper__title">Weather App</h1>
+            <div class="form-wrapper">
                 <input type="text" name="search-input" id="search-input" class="search-input"
                     placeholder="Type the name of the city">
                 <button class="search-button" type="button">Browse</button>
@@ -25,6 +25,7 @@
             <img src="./img/load.gif" alt="Loading Gif" class="loading_gif loading_gif--hidden" width="155"
                 height="155">
             <p class="error-input-field"></p>
+            <p class="error-field"></p>
             <ul class="weather-block">
                 <li class="child-block name"></li>
                 <li class="child-block temp"></li>
@@ -32,7 +33,6 @@
                 <li class="child-block wind-speed"></li>
                 <li class="child-block description"></li>
             </ul>
-            <p class="error-field"></p>
         </div>
     </div>
     <script type="module" src="./js/one-day.js"></script>

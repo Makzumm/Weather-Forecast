@@ -64,6 +64,13 @@ body {
   padding: 0 20px;
 }
 
+:root {
+  --main-white-color: #ffffff;
+  --main-bg-color: #ce9346;
+  --black-main-color: #000000;
+  --dark-rgb-alpha: rgba(0, 0, 0, 0.35);
+}
+
 body {
   font-family: "Montserrat", sans-serif;
 }
@@ -103,46 +110,46 @@ body {
             transform: translate(-50%, -40%);
   }
 }
-.all-wrapper {
+.data-wrapper {
   width: 1150px;
   height: 600px;
-  background: #ce9346;
+  background: var(--main-bg-color);
   border-radius: 10px;
   margin: 0 auto;
 }
 
 @media screen and (max-width: 399px) {
-  .all-wrapper {
+  .data-wrapper {
     width: 300px;
     height: 300px;
-    background: #ce9346;
+    background: var(--main-bg-color);
     border-radius: 10px;
   }
 }
 @media screen and (min-width: 400px) and (max-width: 799px) {
-  .all-wrapper {
+  .data-wrapper {
     width: 400px;
     min-height: 600px;
-    background: #ce9346;
+    background: var(--main-bg-color);
     border-radius: 10px;
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1399px) {
-  .all-wrapper {
+  .data-wrapper {
     width: 750px;
     height: 500px;
-    background: #ce9346;
+    background: var(--main-bg-color);
     border-radius: 10px;
   }
 }
-.all-wrapper__title {
+.data-wrapper__title {
   text-align: center;
   padding-top: 40px;
   margin-bottom: 10px;
 }
 
 @media screen and (max-width: 399px) {
-  .all-wrapper__title {
+  .data-wrapper__title {
     font-size: 22px;
     text-align: center;
     padding-top: 25px;
@@ -150,13 +157,13 @@ body {
   }
 }
 @media screen and (min-width: 400px) and (max-width: 799px) {
-  .all-wrapper__title {
+  .data-wrapper__title {
     text-align: center;
     padding-top: 25px;
     margin-bottom: 0;
   }
 }
-.input-button-wrapper {
+.form-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -169,7 +176,7 @@ body {
 }
 
 @media screen and (max-width: 399px) {
-  .input-button-wrapper {
+  .form-wrapper {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -187,7 +194,7 @@ body {
   }
 }
 @media screen and (min-width: 400px) and (max-width: 799px) {
-  .input-button-wrapper {
+  .form-wrapper {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -201,7 +208,7 @@ body {
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1399px) {
-  .input-button-wrapper {
+  .form-wrapper {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -230,10 +237,10 @@ body {
   text-transform: capitalize;
   font-size: 16px;
   font-weight: 700;
-  color: rgb(0, 0, 0);
-  background: #ffffff;
-  -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-          box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+  color: var(--black-main-color);
+  background: var(--main-white-color);
+  -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+          box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
   cursor: pointer;
 }
 
@@ -254,10 +261,10 @@ body {
   text-transform: capitalize;
   font-size: 16px;
   font-weight: 700;
-  color: rgb(0, 0, 0);
-  background: #ffffff;
-  -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-          box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+  color: var(--black-main-color);
+  background: var(--main-white-color);
+  -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+          box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
   cursor: pointer;
 }
 
@@ -279,10 +286,10 @@ body {
     text-transform: capitalize;
     font-size: 16px;
     font-weight: 700;
-    color: rgb(0, 0, 0);
-    background: #ffffff;
-    -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+    color: var(--black-main-color);
+    background: var(--main-white-color);
+    -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+            box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
     cursor: pointer;
   }
   .location-button {
@@ -302,10 +309,10 @@ body {
     text-transform: capitalize;
     font-size: 14px;
     font-weight: 700;
-    color: rgb(0, 0, 0);
-    background: #ffffff;
-    -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+    color: var(--black-main-color);
+    background: var(--main-white-color);
+    -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+            box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
     cursor: pointer;
   }
 }
@@ -327,10 +334,10 @@ body {
     text-transform: capitalize;
     font-size: 12px;
     font-weight: 700;
-    color: rgb(0, 0, 0);
-    background: #ffffff;
-    -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+    color: var(--black-main-color);
+    background: var(--main-white-color);
+    -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+            box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
     cursor: pointer;
   }
   .location-button {
@@ -350,10 +357,10 @@ body {
     text-transform: capitalize;
     font-size: 12px;
     font-weight: 700;
-    color: rgb(0, 0, 0);
-    background: #ffffff;
-    -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+    color: #000;
+    background: var(--main-white-color);
+    -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+            box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
     cursor: pointer;
   }
 }
@@ -375,10 +382,10 @@ body {
     text-transform: capitalize;
     font-size: 16px;
     font-weight: 700;
-    color: rgb(0, 0, 0);
-    background: #ffffff;
-    -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+    color: var(--black-main-color);
+    background: var(--main-white-color);
+    -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+            box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
     cursor: pointer;
   }
   .location-button {
@@ -398,10 +405,10 @@ body {
     text-transform: capitalize;
     font-size: 12px;
     font-weight: 700;
-    color: rgb(0, 0, 0);
-    background: #ffffff;
-    -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+    color: var(--black-main-color);
+    background: var(--main-white-color);
+    -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+            box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
     cursor: pointer;
   }
 }
@@ -410,8 +417,8 @@ body {
   border: none;
   border-radius: 5px;
   outline: none;
-  -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-          box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+  -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+          box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
   font-family: "Montserrat", sans-serif;
   font-size: 24px;
 }
@@ -422,8 +429,8 @@ body {
     border: none;
     border-radius: 5px;
     outline: none;
-    -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+            box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
     font-family: "Montserrat", sans-serif;
     font-size: 16px;
   }
@@ -434,8 +441,8 @@ body {
     border: none;
     border-radius: 5px;
     outline: none;
-    -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+            box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
     font-family: "Montserrat", sans-serif;
     font-size: 16px;
   }
@@ -446,8 +453,8 @@ body {
     border: none;
     border-radius: 5px;
     outline: none;
-    -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
+            box-shadow: 0px 10px 20px var(--dark-rgb-alpha);
     font-family: "Montserrat", sans-serif;
     font-size: 18px;
   }
@@ -795,34 +802,34 @@ body {
 .error-input-field {
   text-align: center;
   font-size: 24px;
-  color: white;
+  color: var(--main-white-color);
 }
 
 @media screen and (max-width: 399px) {
   .error-input-field {
     text-align: center;
     font-size: 16px;
-    color: white;
+    color: var(--main-white-color);
   }
 }
 @media screen and (min-width: 400px) and (max-width: 799px) {
   .error-input-field {
     text-align: center;
     font-size: 20px;
-    color: white;
+    color: var(--main-white-color);
   }
 }
 @media screen and (min-width: 800px) and (max-width: 1399px) {
   .error-input-field {
     text-align: center;
     font-size: 20px;
-    color: white;
+    color: var(--main-white-color);
   }
 }
 .error-field {
   text-align: center;
   font-size: 24px;
-  color: white;
+  color: var(--main-white-color);
 }
 
 @media screen and (max-width: 399px) {
@@ -834,9 +841,18 @@ body {
             transform: translate(-50%, -50%);
     text-align: center;
     font-size: 18px;
-    color: white;
+    color: var(--main-white-color);
   }
 }
+.loading_gif {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.loading_gif--hidden {
+  display: none;
+}
+
 @media screen and (max-width: 399px) {
   .icon-weather {
     width: 45px;
@@ -854,12 +870,4 @@ body {
     width: 45px;
     height: 45px;
   }
-}
-.loading_gif {
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.loading_gif--hidden {
-  display: none;
 }/*# sourceMappingURL=main.css.map */
