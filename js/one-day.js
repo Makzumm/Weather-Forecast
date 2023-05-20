@@ -119,7 +119,45 @@ function inputCleaner() {
 
 }
 
-buttonEl.addEventListener('click', fetchTown); // BUTTON "BROWSE" THAT MAKING THE MAGIC OF FETCH
+function fetchTown() {
+
+    dataBlockCleaner();
+
+    errorFieldsCleaner();
+
+    inputCleaner();
+
+    if (inputEl.value === '') {
+        errorInputField.innerHTML = 'Please, type the city name!';
+
+    } else {
+        loadingGif.classList.remove('loading_gif--hidden');
+
+        return fetch(`${FETCH_LINK}q=${townValue}&appid=${API_KEY}&units=metric`) // THE WEATHER DATA FETCHING AND SHOWING THE LOADING GIF AND CLEANING ALL THE UNNECESSARY STUFF
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.status);
+                }
+                return response.json()
+            })
+    }
+}
+
+buttonEl.addEventListener('click', () => { // BUTTON "BROWSE" THAT MAKING THE MAGIC OF FETCH
+    fetchTown()
+        .then(data => {
+            townMarkUp(data);
+
+            mediaQueriesFunc(mediaSize);    //IDK, MAYBE I'LL MAKE THIS FUNC MORE EASIER CUZ IT'S ACCPETING A LOT OF SH*T, ANYWAY, IT WORKS)))
+
+            loadingGif.classList.add('loading_gif--hidden');
+        })
+        .catch(error => {
+            errorFilter(error);
+
+            loadingGif.classList.add('loading_gif--hidden');
+        })
+})
 
 inputEl.addEventListener('keyup', function (e) {
     if (inputEl.value === '') {
@@ -137,42 +175,6 @@ inputEl.addEventListener('keyup', function (e) {
         }
     }
 })
-
-function fetchTown() {
-
-    dataBlockCleaner();
-
-    errorFieldsCleaner();
-
-    inputCleaner();
-
-    if (inputEl.value === '') {
-        errorInputField.innerHTML = 'Please, type the city name!';
-
-    } else {
-        loadingGif.classList.remove('loading_gif--hidden');
-
-        fetch(`${FETCH_LINK}q=${townValue}&appid=${API_KEY}&units=metric`) // THE WEATHER DATA FETCHING AND SHOWING THE LOADING GIF AND CLEANING ALL THE UNNECESSARY STUFF
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(response.status);
-                }
-                return response.json()
-            })
-            .then(data => {
-                townMarkUp(data);
-
-                mediaQueriesFunc(mediaSize);    //IDK, MAYBE I'LL MAKE THIS FUNC MORE EASIER CUZ IT'S ACCPETING A LOT OF SH*T, ANYWAY, IT WORKS)))
-
-                loadingGif.classList.add('loading_gif--hidden');
-            })
-            .catch(error => {
-                errorFilter(error);
-
-                loadingGif.classList.add('loading_gif--hidden');
-            });
-    }
-}
 
 /////////////////////////////////////////////////////////////////
 
