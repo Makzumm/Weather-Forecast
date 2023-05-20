@@ -18,6 +18,7 @@ let townValue = undefined;
 let geoLocatCityName = undefined;
 
 let mediaSize = window.matchMedia("(max-width: 399px)");
+let mediaBiggerSize = window.matchMedia("(min-width: 400px)")
 
 const API_KEY = "5161531edb6939420a9faddefc0dd57d";
 const FETCH_LINK = "https://api.openweathermap.org/data/2.5/weather?";
@@ -35,7 +36,7 @@ locationBtn.addEventListener('click', () => {
 
     } else {                                        ///// CHECK IF THE GEOLOCATION IS SUPPORTED
 
-        inputEl.focus()
+        inputEl.focus();
         navigatorPermissionCheck();
     }
 
@@ -50,7 +51,7 @@ function navigatorPermissionCheck() {
 
         } else {
 
-            navigator.geolocation.getCurrentPosition(showPosition)
+            navigator.geolocation.getCurrentPosition(showPosition);
         }
     });
 }
@@ -60,11 +61,13 @@ function showPosition(position) {
     fetch(`https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
         .then(response => response.json())
         .then(data => {
-            geoLocatCityName = data['address']['city'] //// GETTING CONVERTED COORDINATES
+            geoLocatCityName = data['address']['city']; //// GETTING CONVERTED COORDINATES
+
+            console.log(data);
 
             townValue = String(geoLocatCityName);
 
-            inputEl.value = townValue
+            inputEl.value = townValue;
 
         })
         .catch(error => {
@@ -83,13 +86,15 @@ function errorFieldsCleaner() {
     errorInputField.innerHTML = ''; /// ERROR FIELDS CLEANING FUNCTION
 }
 
-function errorFilter(error) {
-    let errorEl = error.name;
+function dataBlockCleaner() {
+    for (const el of weatherWrapperEls) {
+        el.innerHTML = '';
+    }
+}
 
-    if (errorEl) {
-        for (const el of weatherWrapperEls) { // CLEANING VALUES OF THE LI ELEMENTS TO HIHGLIGHT THE ERROR
-            el.innerHTML = '';
-        }
+function errorFilter(error) {
+    if (error) {
+        dataBlockCleaner();
     }
 
     errorField.innerHTML = 'Something went wrong, please, try again.';
@@ -121,26 +126,25 @@ inputEl.addEventListener('keyup', function (e) {
         return null;
 
     } else {
-        townValue = inputEl.value
+        townValue = inputEl.value;
 
         if (e.code === 'Enter') {
             buttonEl.click();
 
             // CHECKING THE INPUT IF IT'S EMPTY AND SOMETHING ELSE XD
 
-            inputEl.blur()
+            inputEl.blur();
         }
     }
 })
 
 function fetchTown() {
-    for (const el of weatherWrapperEls) {
-        el.innerHTML = '';
-    }
+
+    dataBlockCleaner();
 
     errorFieldsCleaner();
+
     inputCleaner();
-    console.clear();
 
     if (inputEl.value === '') {
         errorInputField.innerHTML = 'Please, type the city name!';
@@ -149,7 +153,12 @@ function fetchTown() {
         loadingGif.classList.remove('loading_gif--hidden');
 
         fetch(`${FETCH_LINK}q=${townValue}&appid=${API_KEY}&units=metric`) // THE WEATHER DATA FETCHING AND SHOWING THE LOADING GIF AND CLEANING ALL THE UNNECESSARY STUFF
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.status);
+                }
+                return response.json()
+            })
             .then(data => {
                 townMarkUp(data);
 
