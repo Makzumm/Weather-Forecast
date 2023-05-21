@@ -103,7 +103,7 @@ function townMarkUp(data) { // THE WEATHER MARKUP (KINDA BIG, YEAH?)
 
 function fetchTown() {
 
-    return fetch(`${refs.FETCH_LINK}q=${refs.townValue}&appid=${refs.API_KEY}&units=metric`) // THE WEATHER DATA FETCHING AND SHOWING THE LOADING GIF AND CLEANING ALL THE UNNECESSARY STUFF
+    return fetch(`${refs.FETCH_LINK}q=${refs.townValue.trim()}&appid=${refs.API_KEY}&units=metric`) // THE WEATHER DATA FETCHING AND SHOWING THE LOADING GIF AND CLEANING ALL THE UNNECESSARY STUFF
         .then(response => {
             if (!response.ok) {
                 throw new Error(response.status);
