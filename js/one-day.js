@@ -63,8 +63,6 @@ function showPosition(position) {
         .then(data => {
             geoLocatCityName = data['address']['city']; //// GETTING CONVERTED COORDINATES
 
-            console.log(data);
-
             townValue = geoLocatCityName;
 
             inputEl.value = townValue;
@@ -92,13 +90,28 @@ function dataBlockCleaner() {
     }
 }
 
+function inputCleaner() {
+    setTimeout(() => {
+        if (cityName.value !== '') {    // INPUT CLEANING AFTER USER'S CLICK ON BUTTON BROWSE OR PRESSING THE ENTER ON INPUT 
+            inputEl.value = '';
+        }
+    }, 100)
+
+}
+
+function allCleaner() {
+    dataBlockCleaner();
+
+    errorFieldsCleaner();
+
+    inputCleaner();
+}
+
 function errorFilter(error) {
     if (error) {
+        errorField.innerHTML = 'Something went wrong, please, try again.';
         dataBlockCleaner();
     }
-
-    errorField.innerHTML = 'Something went wrong, please, try again.';
-    errorInputField.innerHTML = '';
 }
 
 function townMarkUp(data) { // THE WEATHER MARKUP (KINDA BIG, YEAH?)
@@ -107,16 +120,6 @@ function townMarkUp(data) { // THE WEATHER MARKUP (KINDA BIG, YEAH?)
     feelsLike.innerHTML = `<p class="weather-block__txt">Feels like : <span class="weather-block__txt--marked">${Math.round(data['main']['feels_like'])}&#176;C</span></p>`;
     windSpeed.innerHTML = `<p class="weather-block__txt">Wind speed : <span class="weather-block__txt--marked">${data['wind']['speed']}km/h</span></p>`;
     description.innerHTML = `<p class="weather-block__txt">Weather : <span class="weather-block__txt--marked">${data['weather'][0]['description'].charAt(0).toUpperCase() + data['weather'][0]['description'].slice(1)}</span></p><img class='icon-weather' src='http://openweathermap.org/img/w/${data["weather"][0]["icon"]}.png' width='65' height='65'>`;
-}
-
-function inputCleaner() {
-    setTimeout(() => {
-
-        if (cityName.value !== '') {    // INPUT CLEANING AFTER USER'S CLICK ON BUTTON BROWSE OR PRESSING THE ENTER ON INPUT 
-            inputEl.value = '';
-        }
-    }, 200)
-
 }
 
 function fetchTown() {
@@ -137,11 +140,7 @@ function fetchTown() {
 }
 
 buttonEl.addEventListener('click', () => { // BUTTON "BROWSE" THAT MAKING THE MAGIC OF FETCH
-    dataBlockCleaner();
-
-    errorFieldsCleaner();
-
-    inputCleaner();
+    allCleaner()
 
     fetchTown()
         .then(data => {
@@ -167,9 +166,7 @@ inputEl.addEventListener('keyup', function (e) {
 
         if (e.code === 'Enter') {
             buttonEl.click();
-
             // CHECKING THE INPUT IF IT'S EMPTY AND SOMETHING ELSE XD
-
             inputEl.blur();
         }
     }
