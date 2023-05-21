@@ -65,7 +65,7 @@ function showPosition(position) {
 
             console.log(data);
 
-            townValue = String(geoLocatCityName);
+            townValue = geoLocatCityName;
 
             inputEl.value = townValue;
 
@@ -120,13 +120,6 @@ function inputCleaner() {
 }
 
 function fetchTown() {
-
-    dataBlockCleaner();
-
-    errorFieldsCleaner();
-
-    inputCleaner();
-
     if (inputEl.value === '') {
         errorInputField.innerHTML = 'Please, type the city name!';
 
@@ -144,6 +137,12 @@ function fetchTown() {
 }
 
 buttonEl.addEventListener('click', () => { // BUTTON "BROWSE" THAT MAKING THE MAGIC OF FETCH
+    dataBlockCleaner();
+
+    errorFieldsCleaner();
+
+    inputCleaner();
+
     fetchTown()
         .then(data => {
             townMarkUp(data);
