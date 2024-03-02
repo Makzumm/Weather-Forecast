@@ -1,26 +1,25 @@
 import getVars from "./get-vars.js";
+
 const refs = getVars();
-/////////////////////////////////////////////////////////////////
-// GEOLOCATION 
-////////////////////////////////////////////////////////////////
 
-refs.locationBtn.addEventListener('click', () => {
-    if (!"geolocation" in navigator) {
-        console.log("navigator is not supported");
+// Event listener for location button
+refs.locationBtn.addEventListener('click', handleLocationButtonClick);
 
-    } else {                                        ///// CHECK IF THE GEOLOCATION IS SUPPORTED
+// Function to handle location button click
+function handleLocationButtonClick() {
+    if (!("geolocation" in navigator)) {
+        console.log("Geolocation is not supported");
+    } else {
         refs.inputEl.focus();
-        navigatorPermissionCheck();
+        checkGeolocationPermission();
     }
+}
 
-})
-
-function navigatorPermissionCheck() {
-    navigator.permissions.query({ name: 'geolocation' }).then(function (permissionStatus) {
-        if (permissionStatus.state === "denied") { //////////// CHECKING IF USER DENIED OR ACCEPTED THE GEOLOCATION
-
-            console.log('denied');
-
+// Function to check geolocation permission
+function checkGeolocationPermission() {
+    navigator.permissions.query({ name: 'geolocation' }).then(permissionStatus => {
+        if (permissionStatus.state === "denied") {
+            console.log('Geolocation permission denied');
         } else {
             navigator.geolocation.getCurrentPosition(showPosition);
         }
@@ -28,36 +27,106 @@ function navigatorPermissionCheck() {
 }
 
 function showPosition(position) {
-    fetch(`https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
-        .then(response => response.json())
-        .then(data => {
-            refs.geoLocatCityName = data['address']['city']; //// GETTING CONVERTED COORDINATES
-            refs.townValue = refs.geoLocatCityName;
-            refs.inputEl.value = refs.townValue;
-        })
-        .catch(error => {
-            errorFilter(error);
-        });;
+    console.log('Latitude:', position.coords.latitude);
+    console.log('Longitude:', position.coords.longitude);
+    fetchLocationData(position.coords.latitude, position.coords.longitude);
 }
 
-/////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////
-// WEATHER FETCH AND SOME ERROR/FUNC HANDLERS
-////////////////////////////////////////////////////////////////
-
-function errorFieldsCleaner() {
-    refs.errorField.innerHTML = '';
-    refs.errorInputField.innerHTML = ''; /// ERROR FIELDS CLEANING FUNCTION
+async function fetchLocationData(latitude, longitude) {
+    try {
+        const response = await fetch(`https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=65e38cc56932f913858260tisf1c967`);
+        if (!response.ok) {
+            throw new Error(response.status);
+        }
+        const data = await response.json();
+        console.log('Location data:', data);
+        updateInputWithLocation(data);
+    } catch (error) {
+        console.error('Error fetching location data:', error);
+    }
 }
 
-function dataBlockCleaner() {
+// Function to update input with location
+function updateInputWithLocation(data) {
+    const cityName = data['address']['town'];
+    if (cityName) {
+        refs.inputEl.value = capitalizeFirstLetter(cityName);
+        refs.townValue = capitalizeFirstLetter(cityName);
+    }
+}
+
+// Event listener for button click
+refs.buttonEl.addEventListener('click', handleButtonClick);
+
+// Function to handle button click
+async function handleButtonClick() {
+    clearAllInfo();
+    if (refs.inputEl.value === '') {
+        refs.errorInputField.innerHTML = 'Please, type the city name!';
+        return;
+    }
+    refs.loadingGif.classList.remove('loading_gif--hidden');
+    try {
+        const weatherData = await fetchWeatherData(refs.townValue.trim());
+        updateWeatherInfo(weatherData);
+        handleMediaQueries(refs.mediaSize);
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
+        handleErrors(error);
+    } finally {
+        refs.loadingGif.classList.add('loading_gif--hidden');
+    }
+}
+
+// Function to fetch weather data
+async function fetchWeatherData(cityName) {
+    const response = await fetch(`${refs.FETCH_LINK}q=${cityName}&appid=${refs.API_KEY}&units=metric`);
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+    return await response.json();
+}
+
+// Function to handle input keyup event
+refs.inputEl.addEventListener('keyup', function (e) {
+    if (refs.inputEl.value === '') {
+        return;
+    } else {
+        refs.townValue = refs.inputEl.value;
+        if (e.code === 'Enter') {
+            refs.buttonEl.click();
+            refs.inputEl.blur();
+        }
+    }
+});
+
+// Function to handle media queries
+function handleMediaQueries(mediaSize) {
+    refs.allElsWrapper.style.height = mediaSize.matches ? "600px" : null;
+}
+
+// Function to clear all information
+function clearAllInfo() {
+    clearDataBlocks();
+    clearErrorFields();
+    clearInput();
+}
+
+// Function to clear data blocks
+function clearDataBlocks() {
     for (const el of refs.weatherWrapperEls) {
         el.innerHTML = '';
     }
 }
 
-function inputCleaner() {
+// Function to clear error fields
+function clearErrorFields() {
+    refs.errorField.innerHTML = '';
+    refs.errorInputField.innerHTML = '';
+}
+
+// Function to clear input
+function clearInput() {
     setTimeout(() => {
         if (refs.cityName.value !== '') {
             refs.inputEl.value = '';
@@ -65,32 +134,21 @@ function inputCleaner() {
     }, 100);
 }
 
-function allInfoCleaner() {
-    dataBlockCleaner();
-    errorFieldsCleaner();
-    inputCleaner();
-}
-
-function errorFilter(error) {
+// Function to handle errors
+function handleErrors(error) {
     if (error) {
-        refs.errorField.innerHTML = 'Something went wrong, please, try again.';
-        dataBlockCleaner();
+        refs.errorField.innerHTML = 'Something went wrong, please try again.';
+        clearDataBlocks();
     }
 }
 
+// Function to capitalize first letter of a string
 function capitalizeFirstLetter(str) {
-    const words = str.split(' ');
-    const capitalizedWords = words.map(word => {
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    });
-    return capitalizedWords.join(' ');
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
-function buildWeatherInfo(title, value) {
-    return `<p class="weather-block__txt">${title} : <span class="weather-block__txt--marked">${value}</span></p>`;
-}
-
-function townMarkUp(data) {
+// Function to update weather information
+function updateWeatherInfo(data) {
     refs.cityName.innerHTML = buildWeatherInfo('City', capitalizeFirstLetter(refs.townValue));
     refs.temp.innerHTML = buildWeatherInfo('Temperature', `${Math.round(data['main']['temp'])}&#176;C`);
     refs.feelsLike.innerHTML = buildWeatherInfo('Feels like', `${Math.round(data['main']['feels_like'])}&#176;C`);
@@ -98,63 +156,7 @@ function townMarkUp(data) {
     refs.description.innerHTML = buildWeatherInfo('Weather', capitalizeFirstLetter(data['weather'][0]['description'])) + `<img class='icon-weather' src='http://openweathermap.org/img/w/${data["weather"][0]["icon"]}.png' width='65' height='65'>`;
 }
 
-async function fetchTown() {
-    const response = await fetch(`${refs.FETCH_LINK}q=${refs.townValue.trim()}&appid=${refs.API_KEY}&units=metric`); // THE WEATHER DATA FETCHING AND SHOWING THE LOADING GIF AND CLEANING ALL THE UNNECESSARY STUFF
-    if (!response.ok) {
-        throw new Error(response.status);
-    }
-    return await response.json();
-
+// Function to build weather information markup
+function buildWeatherInfo(title, value) {
+    return `<p class="weather-block__txt">${title} : <span class="weather-block__txt--marked">${value}</span></p>`;
 }
-
-refs.buttonEl.addEventListener('click', async () => {
-    allInfoCleaner();
-
-    if (refs.inputEl.value === '') {
-        refs.errorInputField.innerHTML = 'Please, type the city name!';
-        return;
-    }
-
-    refs.loadingGif.classList.remove('loading_gif--hidden');
-
-    try {
-        const data = await fetchTown();
-        townMarkUp(data);
-        mediaQueriesFunc(refs.mediaSize);
-    } catch (error) {
-        errorFilter(error);
-    } finally {
-        refs.loadingGif.classList.add('loading_gif--hidden');
-    }
-});
-
-refs.inputEl.addEventListener('keyup', function (e) {
-    if (refs.inputEl.value === '') {
-        return null;
-
-    } else {
-        refs.townValue = refs.inputEl.value;
-
-        if (e.code === 'Enter') {
-            refs.buttonEl.click();
-            // CHECKING THE INPUT IF IT'S EMPTY
-            refs.inputEl.blur();
-        }
-    }
-})
-
-/////////////////////////////////////////////////////////////////
-
-// MEDIA QUERIES
-
-function mediaQueriesFunc(mediaSize) {
-    if (refs.mediaSize.matches) { // If media query matches
-
-        refs.allElsWrapper.style.height = "600px";
-        //CHECKING THE SIZE OF BROWESER IN SMALL MOBILES TO SHOW THE DATA IN PROPER WAY
-    } else {
-        refs.allElsWrapper.style.height = null
-    }
-}
-
-/////////////////////////////////////////////////////////////////
