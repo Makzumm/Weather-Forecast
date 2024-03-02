@@ -17,13 +17,25 @@ function handleLocationButtonClick() {
 
 // Function to check geolocation permission
 function checkGeolocationPermission() {
-    navigator.permissions.query({ name: 'geolocation' }).then(permissionStatus => {
-        if (permissionStatus.state === "denied") {
-            console.log('Geolocation permission denied');
-        } else {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        }
-    });
+    if (navigator.geolocation) {
+        navigator.permissions.query({ name: 'geolocation' }).then(permissionStatus => {
+            if (permissionStatus.state === "granted") {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else if (permissionStatus.state === "prompt") {
+                navigator.geolocation.requestPermission().then(result => {
+                    if (result === "granted") {
+                        navigator.geolocation.getCurrentPosition(showPosition);
+                    } else {
+                        console.log('Geolocation permission denied');
+                    }
+                });
+            } else {
+                console.log('Geolocation permission denied');
+            }
+        });
+    } else {
+        console.log('Geolocation is not supported');
+    }
 }
 
 function showPosition(position) {
